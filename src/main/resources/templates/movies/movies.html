@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<style>
+.slider .main-slider .swiper-slide .container .name {
+    font-size: 50px!important;
+}
+
+.navbar {
+    background-color: #111!important;
+}
+
+.video-thumb.light .video-content .name a {
+    color: #fff;
+    text-decoration: none;
+}
+ .play-btn a {
+    width: 46px;
+    line-height: 46px;
+    display: table-caption;
+    background: #fff;
+    border-radius: 50%;
+    text-align: center;
+    position: relative;
+    text-indent: -9999px;
+    top: -158px;
+    left: -179%;
+}
+
+ .play-btn a:hover {
+ background-color: red;
+}
+
+.play-btn a:after {
+    content: "";
+    -webkit-transition: all .35s ease-in-out;
+    -moz-transition: all .35s ease-in-out;
+    -ms-transition: all .35s ease-in-out;
+    -o-transition: all .35s ease-in-out;
+    transition: all .35s ease-in-out;
+    position: absolute;
+    left: calc(50% - 4px);
+    top: calc(50% - 8px);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 0 8px 12px;
+    border-color: transparent transparent transparent #111111;
+}
+.section-title {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+    margin-top: 25px;
+}
+</style>
+<body>
+<nav th:replace="fragments/menuheader :: menuheader"> </nav>
+
+<header>
+  <section class="content-section" data-background="#111111">
+    <div class="container">
+    <div class="col-12" th:if="${type != '' && type != null}">
+        <div class="section-title text-center light">
+          <h5 th:inline="text"> [[${queryKey}]] 
+          <span th:if="${queryKey != '' && queryKey != null}">: </span> 
+          [[${type=='generic'?genericName:(type=='personMovies'?personName:(type=='languageMovies'?languageName:query))}]]</h5>
+        </div>
+      </div>
+    <span id="appenddata"></span>
+  </div>
+  </section>
+</header>
+
+<div th:replace="fragments/scriptfile :: scriptfile"></div>
+<script type="text/javascript" th:inline="javascript"> 
+	$(function() {
+		var pageIndex = 1;
+		var type = [[${type}]]; // type of functionality like search, genric, person
+		var query = [[${query}]]; // this is only for search functionality
+		var queryId = [[${queryId}]]; // this is for either genericId, personId, languageId
+		var searchType = [[${searchType}]] // search either movie or person
+		
+		
+		$.get("/movies/all?pageIndex=" + pageIndex + "&type=" + type + "&query=" + query + "&queryId=" + queryId + "&searchType=" + searchType, function(response) {
+			$("#appenddata").append(response);
+		});
+
+		$(document.body).on('touchmove', onScroll);
+		$(window).on('scroll', onScroll);
+
+		function onScroll() {
+			if ($(window).scrollTop() + window.innerHeight >= document.body.scrollHeight) {
+				pageIndex = pageIndex + 1;
+				$.get("/movies/all?pageIndex=" + pageIndex + "&type=" + type + "&query=" + query + "&queryId=" + queryId + "&searchType=" + searchType, function(response) {
+					$("#appenddata").append(response);
+				});
+			}
+		}
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<style>
+.slider .main-slider .swiper-slide .container .name {
+    font-size: 50px!important;
+}
+</style>
+<body>
+<nav th:replace="fragments/menuheader :: menuheader"> </nav>
+
+<header class="slider">
+  <div class="main-slider">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" th:each="movie : ${movies}">
+        <div class="slide-inner" th:attr="data-background=${'http://image.tmdb.org/t/p/w1920_and_h800_multi_faces' + movie.backdrop_path}">
+          <div class="container" data-swiper-parallax="200">
+            <h6 class="tagline">NEW RELEASES</h6>
+            <h2 class="name" th:text="${movie.title}">Movie Name</h2>
+            <ul class="features">
+              <li>
+                <div class="rate">
+                  <svg class="circle-chart" viewBox="0 0 30 30" width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="circle-chart__background" stroke="#2f3439" stroke-width="2" fill="none" cx="15" cy="15" r="14"></circle>
+                    <circle class="circle-chart__circle" stroke="#4eb04b" stroke-width="2" th:attr="stroke-dasharray=${(movie.vote_average * 10) + ',100'}" cx="15" cy="15" r="14"></circle>
+                  </svg>
+                  <b th:text="${movie.vote_average}">5.4</b> IMDB SCORE </div>
+                <!-- end rate --> 
+              </li>
+              <li>
+                <div class="year" th:text="${movie.release_date}">2020</div>
+              </li>
+              <li>
+                <div class="hd">4K <b>ULTRA HD</b></div>
+              </li>
+              <li>
+                <div class="tags" th:text="${movie.genrics}">Romance, Action</div>
+              </li>
+            </ul>
+            <p class="description" th:text="${movie.overview}"></p>
+            <a th:href="${'/trailers?movieId='+movie.id}" class="play-btn">WATCH TRAILER</a> 
+            <a href="javascript:void(0)" class="details-btn" th:onclick="'javascript:playmovie(' + ${movie.id} + ')'">WATCH MOVIE</a> 
+            <!-- <a href="account.html" class="add-btn">+</a> </div> -->
+          <!-- end container --> 
+        </div>
+      </div>
+
+    </div>
+    <!-- <div class="swiper-pagination"></div> -->
+  </div>
+</header>
+
+
+<div th:replace="fragments/scriptfile :: scriptfile"></div>
+<script type="text/javascript">
+	var ipAddress = "";
+	$(function() {
+		$.get("https://ipapi.co/json/", function(response) {
+			console.log(response);
+			ipAddress = response.ip;
+		});
+	});	
+	
+	function playmovie(movieId) {
+		window.location.href="/movie/details?movieId=" + movieId + "&ipAddress=" + ipAddress;
+	}
+</script>
+</body>
+</html>

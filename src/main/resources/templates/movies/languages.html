@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<link rel="stylesheet" th:href="@{/moviedetails/css/typography.css}">
+<link rel="stylesheet" th:href="@{/moviedetails/css/responsive.css}" />
+<style>
+.slider .main-slider .swiper-slide .container .name {
+	font-size: 50px !important;
+}
+.big-title {
+    background: url(../moviedetails/images/texure.jpg);
+    background-repeat: repeat-x;
+    background-position: 100% 100%;
+    color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.search-box {
+    z-index: 200000;
+}
+.rate b {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    position: absolute;
+    left: 15px;
+    /* top: 75px; */
+    font-size: 14px;
+}
+.rate {
+    color: #65ee5b;
+}
+.tags {
+    color: #e90101;
+    font-weight: 600;
+}
+.navbar {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 30px 60px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 4000000;
+    color: #fff;
+    background-color: #2d2d2d;
+}
+.parallax-window { height: 100%; padding: 100px 0; position: relative; background-size: cover; background-attachment: fixed; }
+.parallax-window::after { position: absolute; content: ""; top: 0; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.8); }
+.parallaxt-details { z-index: 9; position: relative; }
+
+.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    margin-bottom: 15px;
+}
+
+.card-body {
+    background: #234238;
+    color: #fff;
+    text-align: center;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+
+.card-body:hover {
+    background: #29425d;
+    color: #fff;
+}
+
+</style>
+<body>
+	<nav th:replace="fragments/menuheader :: menuheader"></nav>
+	<header>
+		<section id="parallex" class="parallax-window" style="background: url(../moviedetails/images/texure.jpg);">
+           <div class="container-fluid h-100">
+              <div class="row h-100 parallaxt-details">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+              <div class="form-group">
+			    <input type="text" class="form-control search-input" placeholder="Search Language" style="width: 100%;">
+			  </div>
+              </div>
+              
+              <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-6 main" th:each="language : ${movieLanguages}" data-filter-item>
+	              <div class="parallax-img card">
+	                    <a th:href="${'/language/movies?languageId=' + language.iso_639_1 + '&languageName=' + language.english_name}" th:inline="text" class="card-body"> [[${language.english_name}]]</a>
+	               </div>
+              </div>
+              </div>
+           </div>
+        </section>
+	</header>
+
+<div th:replace="fragments/scriptfile :: scriptfile"></div>
+<script>
+var searchInput = document.querySelector('.search-input');
+searchInput.addEventListener('keyup', search);
+
+var titles = document.querySelectorAll('.main');
+var searchTerm = '';
+var tit = '';
+function search(e) {
+	searchTerm = e.target.value.toLowerCase();
+	titles.forEach((title) => {
+	    tit = title.textContent.toLowerCase();
+	    tit.includes(searchTerm) ? title.style.display = 'block' : title.style.display = 'none';
+	  });
+}
+</script>
+</body>
+</html>

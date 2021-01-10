@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<link th:href="@{/trailers/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css}" rel="stylesheet">
+<link th:href="@{/trailers/fonts/pe-icon-7-stroke/css/helper.css}" rel="stylesheet">
+<link th:href="@{/trailers/fonts/pe-icon-social/css/pe-icon-social.css}" rel="stylesheet">
+<link th:href="@{/trailers/fonts/pe-icon-social/css/helper.css}" rel="stylesheet">
+
+<link th:href="@{/trailers/css/owl.carousel.css}" rel="stylesheet">
+<link th:href="@{/trailers/css/owl.theme.default.css}" rel="stylesheet">
+
+<link th:href="@{/trailers/css/jquery.mb.YTPlayer.min.css}" rel="stylesheet">
+<link th:href="@{/trailers/scripts/Nivo-Lightbox/nivo-lightbox.css}" rel="stylesheet">
+<link th:href="@{/trailers/scripts/Nivo-Lightbox/themes/default/default.css}" rel="stylesheet">
+<link th:href="@{/trailers/css/style.css}" rel="stylesheet">
+
+<body>
+	<nav th:replace="fragments/menuheader :: menuheader"></nav>
+	<header class="slider">
+		<div class="">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<div class="slide-inner">
+					<div class="page-wrapper">
+							<div class="inner">
+								<div class="page-full">
+									<div class="trailer-slider">
+										<div class="trailer"  th:style="'background-image:url(http://image.tmdb.org/t/p/w1920_and_h800_multi_faces' + ${movieTrailer.image_path} + ');'" th:each="movieTrailer,iter : ${movieTrailers.trailers}">
+											<div class="inner">
+												<a th:href="${'https://www.youtube.com/watch?v=' + movieTrailer.key}" class="video-play"><i class="pe-7s-play"></i></a>
+												<div class="video-details">
+													<h4 th:text="${movieTrailers.movie.title + ' Trailer ' + (iter.index + 1)}">trailer 1 Title here</h4>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+
+	<div th:replace="fragments/scriptfile :: scriptfile"></div>
+	<script th:src="@{/trailers/js/jquery-1.11.2.min.js}"></script>
+	<script th:src="@{/trailers/js/imagesloaded.pkgd.min.js}"></script>
+	<script th:src="@{/trailers/js/owl.carousel.min.js}"></script>
+	<script th:src="@{/trailers/js/jquery.nicescroll.min.js}"></script>
+	<script th:src="@{/trailers/js/jquery.mb.YTPlayer.min.js}"></script>
+	<script th:src="@{/trailers/js/jquery.vide.min.js}"></script>
+	<script th:src="@{/trailers/scripts/Nivo-Lightbox/nivo-lightbox.min.js}"></script>
+	<script th:src="@{/trailers/js/scripts.js}"></script>
+
+</body>
+</html>

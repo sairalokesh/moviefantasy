@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<style>
+</style>
+<div th:fragment="menuheader">
+	<nav class="mobile-menu">
+		<div class="inner">
+			<div class="mobile-search">
+				<h6>Type movie or tv show name to find it</h6>
+				<form>
+					<input type="search" placeholder="Search here" /> <input type="submit" value="FIND" />
+				</form>
+			</div>
+			<!-- end mobile-search -->
+			<a href="account.html" class="button-account"><i class="lni lni-user"></i> ACCOUNT </a>
+			<!-- end button-account -->
+			<div class="site-menu">
+				<ul>
+					<li><a th:href="@{'/home'}">HOME</a></li>
+					<li><a th:href="@{'/movies'}">MOVIES</a></li>
+					<li><a th:href="@{'/genres'}">GENRES</a></li>
+					<li><a th:href="@{'/persons'}">PERSONS</a></li>
+					<li><a th:href="@{'/languages'}">LANGUAGES</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<nav class="navbar">
+		<div class="logo">
+			<a th:href="@{'/'}" style="color: #62c38d;font-size: 27px;font-weight: bold;text-decoration: none;"> Movie Time</a>
+		</div>
+		<div class="site-menu">
+			<ul>
+				<li><a th:href="@{'/home'}" th:style="'color:' + ${title=='home'?'red':'white'} + ';'">HOME</a></li>
+				<li><a th:href="@{'/movies'}" th:style="'color:' + ${title=='movies'?'red':'white'} + ';'">MOVIES</a></li>
+				<li><a th:href="@{'/genres'}" th:style="'color:' + ${title=='genres'?'red':'white'} + ';'">GENRES</a></li>
+				<li><a th:href="@{'/persons'}" th:style="'color:' + ${title=='persons'?'red':'white'} + ';'">PERSONS</a></li>
+				<li><a th:href="@{'/languages'}" th:style="'color:' + ${title=='languages'?'red':'white'} + ';'">LANGUAGES</a></li>
+			</ul>
+		</div>
+		<div class="user-menu">
+			<div class="navbar-search">
+				<i class="lni lni-search-alt"></i>
+			</div>
+			
+			<div class="navbar-account">
+				<a href="account.html">&nbsp;
+				</a>
+			</div>
+		</div>
+		<!-- end user-menu -->
+		<div class="hamburger-menu">
+			<button class="hamburger">
+				<svg width="45" height="45" viewBox="0 0 100 100">
+		          <path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
+		          <path class="line line2" d="M 20,50 H 80" />
+		          <path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
+		        </svg>
+			</button>
+		</div>
+	</nav>
+	
+	<section class="search-box">
+	  <div class="container">
+	    <form th:action="@{'/movies/search'}" method="get">
+	    	<div class="custom-control custom-radio custom-control-inline">
+			  <input type="radio" class="custom-control-input" id="defaultInline1" name="searchType" value="movie" checked="checked">
+			  <label class="custom-control-label" for="defaultInline1">Movie</label>
+			</div>
+			
+			<div class="custom-control custom-radio custom-control-inline">
+			  <input type="radio" class="custom-control-input" id="defaultInline2" name="searchType" value="person">
+			  <label class="custom-control-label" for="defaultInline2">Person</label>
+			</div>
+	      <input type="search" placeholder="Search here" name="query"/>
+	      <input type="submit" value="FIND"/>
+	    </form>
+	  </div>
+	</section>
+</div>
+</html>
